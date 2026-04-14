@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Innovator Critique Briefing — SilkAI — x24216267</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink:    #1A1410;
+      --gold:   #8B6914;
+      --light:  #F8F4EC;
+      --mid:    #E8E0CC;
+      --muted:  #6B5F4A;
+      --border: #D4C89A;
+      --red:    #8B1A1A;
+      --amber:  #B8680A;
+      --green:  #2D6A2D;
+    }
+    body {
+      font-family: 'Merriweather', Georgia, serif;
+      background: white;
+      color: var(--ink);
+      font-size: 10.5pt;
+      line-height: 1.75;
+      max-width: 210mm;
+      margin: 0 auto;
+      padding: 20mm 22mm;
+    }
+    @media print {
+      body { padding: 15mm 18mm; }
+      .no-print { display: none !important; }
+    }
+    h1 { font-size: 22pt; font-weight: 700; line-height: 1.2; margin-bottom: .4rem; }
+    h2 { font-size: 14pt; font-weight: 700; margin: 2.2rem 0 .6rem; padding-bottom: .35rem; border-bottom: 2px solid var(--gold); color: var(--gold); }
+    h3 { font-size: 11pt; font-weight: 700; margin: 1.4rem 0 .4rem; color: var(--ink); }
+    p  { margin-bottom: .9rem; }
+    strong { font-weight: 600; }
+    em { font-style: italic; }
+    ul, ol { padding-left: 1.4rem; margin-bottom: .9rem; }
+    li { margin-bottom: .35rem; }
+
+    /* COVER */
+    .cover {
+      border-bottom: 3px double var(--gold);
+      padding-bottom: 1.5rem; margin-bottom: 2rem;
+    }
+    .cover-meta { font-family: 'Inter', sans-serif; font-size: 9pt; color: var(--muted); margin-top: .5rem; }
+    .cover-meta span { margin-right: 1.5rem; }
+
+    /* EXECUTIVE SUMMARY */
+    .exec-summary {
+      background: var(--light); border: 1px solid var(--border);
+      border-left: 4px solid var(--gold);
+      padding: 1rem 1.2rem; margin-bottom: 2rem;
+      font-size: 10pt;
+    }
+
+    /* TABLE */
+    table {
+      width: 100%; border-collapse: collapse;
+      margin: 1rem 0 1.5rem; font-size: 9pt;
+      font-family: 'Inter', sans-serif;
+    }
+    th {
+      background: var(--ink); color: white;
+      padding: .55rem .7rem; text-align: left;
+      font-weight: 600; font-size: 8.5pt; letter-spacing: .03em;
+    }
+    td { padding: .5rem .7rem; border: 1px solid var(--border); vertical-align: top; }
+    tr:nth-child(even) td { background: var(--light); }
+    .sev-h { color: var(--red); font-weight: 700; }
+    .sev-m { color: var(--amber); font-weight: 700; }
+    .sev-l { color: var(--green); font-weight: 600; }
+    .quote { font-style: italic; color: var(--red); font-size: 8.5pt; }
+
+    /* PART LABELS */
+    .part-label {
+      display: inline-block;
+      background: var(--ink); color: white;
+      font-family: 'Inter', sans-serif;
+      font-size: 8.5pt; font-weight: 600;
+      padding: .2rem .7rem; border-radius: 3px;
+      letter-spacing: .06em; margin-bottom: .5rem;
+    }
+    .marks { float: right; font-family: 'Inter', sans-serif; font-size: 8.5pt; color: var(--muted); }
+
+    /* RISK POSTURE BOX */
+    .risk-box {
+      background: #FFF8F0; border: 1.5px solid #D4601A;
+      border-left: 5px solid #D4601A;
+      padding: .9rem 1.1rem; margin: 1rem 0;
+      font-size: 10pt;
+    }
+
+    /* TRUST CARDS */
+    .trust-card {
+      border: 1px solid var(--border); border-left: 4px solid var(--red);
+      background: var(--light); padding: .9rem 1.1rem; margin: 1rem 0;
+    }
+    .trust-card .file { font-family: 'Inter', sans-serif; font-size: 8.5pt; color: var(--muted); margin-bottom: .35rem; }
+    .trust-card blockquote { font-style: italic; color: var(--red); margin: .4rem 0; padding-left: .8rem; border-left: 2px solid var(--border); font-size: 9.5pt; }
+    .trust-card .reason { font-size: 9.5pt; margin-top: .4rem; }
+
+    /* POSITION BOX */
+    .position-box {
+      background: #F0F4E8; border: 1.5px solid #4A7A2A;
+      border-left: 5px solid #4A7A2A;
+      padding: 1rem 1.2rem; margin: 1rem 0;
+    }
+    .position-box h3 { color: #2D6A2D; margin-top: 0; }
+
+    /* BUDGET TABLE */
+    .budget td:last-child { text-align: right; font-family: 'Inter', sans-serif; }
+    .budget tr.total td { font-weight: 700; background: var(--mid); }
+
+    /* PAGE BREAK */
+    .pb { page-break-before: always; }
+
+    /* CONDITIONS */
+    .condition {
+      border: 1px solid var(--border); padding: .65rem .9rem;
+      margin: .5rem 0; border-left: 3px solid var(--gold);
+      background: var(--light);
+    }
+    .condition strong { color: var(--gold); }
+
+    /* COMMIT HASH */
+    code {
+      font-family: 'Courier New', monospace;
+      background: var(--mid); padding: .1rem .35rem;
+      border-radius: 3px; font-size: 9pt;
+    }
+
+    /* PRINT BUTTON */
+    .no-print {
+      position: fixed; bottom: 1.5rem; right: 1.5rem;
+      background: var(--ink); color: white;
+      border: none; padding: .65rem 1.2rem; border-radius: 5px;
+      font-family: 'Inter', sans-serif; font-size: .85rem;
+      cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,.25);
+    }
+    .no-print:hover { background: #2D2820; }
+  </style>
+</head>
+<body>
+
+<button class="no-print" onclick="window.print()">🖨 Print / Save as PDF</button>
+
+<!-- COVER -->
+<div class="cover">
+  <h1>Innovator Critique: From Pipeline to Position</h1>
+  <p style="font-size:13pt;font-weight:300;color:var(--muted);margin:.25rem 0 .75rem">Venture: <strong style="color:var(--ink)">SilkAI</strong> — AI-Powered Agricultural Trade Platform</p>
+  <div class="cover-meta">
+    <span><strong>Module:</strong> Customer Engagement and Artificial Intelligence (H9CEAI)</span>
+    <span><strong>Student ID:</strong> x24216267</span>
+    <span><strong>Programme:</strong> MSCAIBUS1 / MSCAI</span><br style="margin-bottom:.35rem">
+    <span><strong>Date:</strong> 14 April 2026</span>
+    <span><strong>Lecturer:</strong> Victor del Rosal</span>
+    <span><strong>Estimated time to complete pipeline:</strong> ~2 hours</span>
+  </div>
+</div>
+
+<!-- SUBMISSION BUNDLE -->
+<div class="exec-summary">
+  <strong>Submission Bundle</strong><br>
+  <strong>Live GitHub Pages URL:</strong> <code>https://ran-im.github.io/x24216267-innovator-critique/</code><br>
+  <strong>Landing page:</strong> <code>https://ran-im.github.io/x24216267-innovator-critique/index.html</code><br>
+  <strong>Pitch deck:</strong> <code>https://ran-im.github.io/x24216267-innovator-critique/pitch.html</code><br>
+  <strong>Prototype:</strong> <code>https://ran-im.github.io/x24216267-innovator-critique/prototype.html</code><br>
+  <strong>Public repository URL:</strong> <code>https://github.com/ran-im/x24216267-innovator-critique</code><br>
+  <strong>Initial commit hash:</strong> <code>fa8d2ce</code><br>
+  <strong>Prototype commit hash:</strong> <em>[see Part D — updated after prototype commit]</em>
+</div>
+
+<!-- PART A -->
+<h2><span class="part-label">PART A</span> Regulatory Audit of Own Artefacts <span class="marks">25 marks</span></h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:9%">Artefact</th>
+      <th style="width:18%">Issue</th>
+      <th style="width:7%">Severity</th>
+      <th style="width:22%">Quoted Offending Text</th>
+      <th style="width:22%">Regulatory Basis</th>
+      <th style="width:22%">Recommended Fix</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>index.html</td>
+      <td>Email capture with no GDPR privacy notice or consent mechanism</td>
+      <td><span class="sev-h">High</span></td>
+      <td class="quote">"your@email.com" [email input field with no privacy policy link, no consent checkbox, no legal basis stated]</td>
+      <td>GDPR Art. 13 (information to be provided); Art. 6(1)(a) (consent as legal basis); ePrivacy Directive 2002/58/EC; Data Protection Act 2018 (Ireland)</td>
+      <td>Add explicit consent checkbox with link to Privacy Policy and state legal basis. Add "By submitting, you agree to our Privacy Policy (GDPR Art. 6(1)(a))." <em>[Corrected in Part C]</em></td>
+    </tr>
+    <tr>
+      <td>index.html</td>
+      <td>Fabricated testimonials presented as real customer social proof</td>
+      <td><span class="sev-h">High</span></td>
+      <td class="quote">"I sold my sesame harvest to a buyer in Düsseldorf at 3.8 times my previous price… Payment arrived in 12 days." — Rashid M., Farmer, Fergana Valley, Uzbekistan</td>
+      <td>EU Unfair Commercial Practices Directive 2005/29/EC Art. 6(b) (misleading actions re. social endorsement); Irish Consumer Protection Act 2007 s.46 (misleading commercial practices); EU Consumer Rights Directive 2011/83/EU</td>
+      <td>Label as "Simulated scenario based on comparable platform outcomes" or remove entirely until real user data is available. <em>[Disclaimer added in Part C]</em></td>
+    </tr>
+    <tr>
+      <td>index.html</td>
+      <td>Unregulated escrow/payment service claimed without licensed provider disclosure</td>
+      <td><span class="sev-h">High</span></td>
+      <td class="quote">"Payment protection escrow" [feature listed with no reference to regulated provider or authorisation status]</td>
+      <td>EU Payment Services Directive 2 (PSD2) 2015/2366; Central Bank of Ireland authorisation requirements; Electronic Money Regulations 2011 (Ireland)</td>
+      <td>Add disclaimer: "Escrow services provided by [Name], authorised under PSD2 by [regulator]." SilkAI itself cannot offer escrow without FSP licence or partnership with a licensed entity.</td>
+    </tr>
+    <tr>
+      <td>pitch.html</td>
+      <td>Fabricated traction metrics presented as verified facts to investors</td>
+      <td><span class="sev-h">High</span></td>
+      <td class="quote">"847 Waitlist signups across 4 countries… 3 Agricultural cooperative partnerships signed… 2 Government Letters of Intent (TKM + UZB)"</td>
+      <td>EU Prospectus Regulation 2017/1129 Art. 7 (material accuracy); Companies Act 2014 (Ireland) s.1041 (misleading statements to investors); Market Abuse Regulation 596/2014</td>
+      <td>Label as "Pre-launch pilot targets — not verified live metrics." Remove "signed" language unless LOIs genuinely executed. <em>[Disclaimer added in Part C]</em></td>
+    </tr>
+    <tr>
+      <td>pitch.html</td>
+      <td>Financial projections presented without forward-looking statement disclaimer</td>
+      <td><span class="sev-h">High</span></td>
+      <td class="quote">"$299K Year 1 ARR Target… $2,244,000 Year 3"</td>
+      <td>EU Prospectus Regulation Art. 11; MiFID II (investor protection); Companies Act 2014 (Ireland); FCA financial promotion rules</td>
+      <td>Add standard disclaimer: "Forward-looking projections. Actual results may differ materially. Not a guarantee of future performance." <em>[Added in Part C]</em></td>
+    </tr>
+    <tr>
+      <td>index.html</td>
+      <td>AI system operating without transparency disclosure to users</td>
+      <td><span class="sev-m">Medium</span></td>
+      <td class="quote">"Our matching engine learns your crop profile and surfaces only buyers with verified trade histories"</td>
+      <td>EU AI Act (Regulation 2024/1689) Art. 50 (transparency obligations for AI systems interacting with natural persons); Art. 52 (AI-generated content disclosure); Recital 132</td>
+      <td>Add in-app disclosure: "This recommendation is generated by an AI system. Results are not guaranteed." Conduct Art. 6 risk classification to determine if high-risk AI Act provisions apply.</td>
+    </tr>
+    <tr>
+      <td>index.html</td>
+      <td>No cookie consent banner; third-party resources loaded without consent</td>
+      <td><span class="sev-m">Medium</span></td>
+      <td class="quote">&lt;link href="https://fonts.googleapis.com/…"&gt; [loaded unconditionally on page load with no consent prompt]</td>
+      <td>ePrivacy Directive 2002/58/EC Art. 5(3); GDPR Art. 7; Irish Data Protection Commission guidance on cookies (2023); Planet49 CJEU ruling C-673/17</td>
+      <td>Implement cookie consent management platform (e.g. Cookiebot, OneTrust). Self-host Google Fonts to eliminate third-party data transfer without consent.</td>
+    </tr>
+    <tr>
+      <td>index.html</td>
+      <td>Document automation scope overstated; "34 country compliance" unsupported claim</td>
+      <td><span class="sev-m">Medium</span></td>
+      <td class="quote">"Compliant with 34 importing country requirements"</td>
+      <td>EU Consumer Rights Directive 2011/83/EU Art. 6 (pre-contractual information); Irish Consumer Protection Act 2007 s.43 (misleading commercial practices); EU UCPD Art. 6</td>
+      <td>Replace with specific, verifiable claim: "Supporting key import markets including EU, UK, GCC, China." Add legal disclaimer that documents require review before submission. <em>[Corrected in Part C]</em></td>
+    </tr>
+    <tr>
+      <td>pitch.html</td>
+      <td>Market size claim ($4.2B) stated without source citation visible in slide</td>
+      <td><span class="sev-m">Medium</span></td>
+      <td class="quote">"$4.2B Central Asian agricultural exports. 180,000 farmers. 0 direct trade platforms."</td>
+      <td>EU Prospectus Regulation (misleading omissions); EU UCPD 2005/29/EC Art. 7 (misleading omissions); Irish Consumer Protection Act 2007</td>
+      <td>Add footnote to slide: "(Source: World Bank Agricultural Trade Data, 2023; FAO FAOSTAT, 2023. Figure represents estimated regional aggregate.)"</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="risk-box">
+  <strong>Regulatory Risk Posture:</strong> SilkAI's pre-launch artefacts carry <strong>high overall regulatory exposure</strong>. The most critical failures are: fabricated traction metrics and social proof that breach EU unfair commercial practices law and Irish consumer statute; a GDPR-non-compliant data capture form that creates immediate data protection liability; and an unqualified escrow claim that requires PSD2 authorisation without disclosing a licensed partner. EU AI Act transparency obligations are unmet for the matching engine. The posture is <strong>HIGH-RISK for investor presentation and public launch</strong>. Remediation across all five high-severity issues must precede any further market-facing activity.
+</div>
+
+<!-- PART B -->
+<h2 class="pb"><span class="part-label">PART B</span> Trust Transfer Audit <span class="marks">15 marks</span></h2>
+
+<p>Reading both artefacts as a prospective smallholder producer from Mary Province, Turkmenistan — the exact primary target segment — the following three moments represent specific trust collapse points:</p>
+
+<div class="trust-card">
+  <div class="file">File: <code>index.html</code> — Testimonials section</div>
+  <blockquote>"I sold my sesame harvest to a buyer in Düsseldorf at 3.8 times my previous price. SilkAI handled the translation, the contract, and the documentation. Payment arrived in 12 days." — Rashid M., Farmer, Fergana Valley, Uzbekistan</blockquote>
+  <p class="reason">Trust collapses here because a Central Asian producer in the exact target segment — who knows Fergana Valley market conditions and local sesame prices intimately — will immediately recognise that a 3.8× price improvement with 12-day German payment is implausibly precise for a pre-launch platform with no live operations, and the moment "Rashid M." proves unverifiable, every other platform claim becomes suspect by association.</p>
+</div>
+
+<div class="trust-card">
+  <div class="file">File: <code>index.html</code> — Features section (Document Automation)</div>
+  <blockquote>"Compliant with 34 importing country requirements"</blockquote>
+  <p class="reason">Trust collapses here because the first producer who generates a document for a specific destination country and has it rejected by customs authorities will experience the operational failure of this precise compliance claim as a direct betrayal — destroying confidence in the document automation service, which is the platform's most operationally differentiating and legally consequential feature.</p>
+</div>
+
+<div class="trust-card">
+  <div class="file">File: <code>pitch.html</code> — Slide 7: Traction</div>
+  <blockquote>"847 Waitlist signups across 4 countries… 3 Agricultural cooperative partnerships signed… 2 Government Letters of Intent (TKM + UZB)"</blockquote>
+  <p class="reason">Trust collapses here because any investor conducting standard due diligence who asks to speak with one of the three "signed cooperative partners" or to see a copy of either government LOI — and finds neither can be produced — will conclude that the founding team fabricated traction, ending the investment relationship and potentially triggering legal consequences under securities disclosure obligations.</p>
+</div>
+
+<!-- PART C -->
+<h2 class="pb"><span class="part-label">PART C</span> Research and Correct <span class="marks">15 marks</span></h2>
+
+<h3>Research Conducted</h3>
+<p>Following the pipeline generation, independent research was conducted using live web sources to verify the five key factual claims embedded in <code>index.html</code> and <code>pitch.html</code>. Sources consulted: World Bank agricultural trade data, FAO FAOSTAT, WorldTopExports (2024), GSMA Mobile Economy Eurasia (2024), and academic literature on agricultural intermediary margins in developing economies.</p>
+
+<h3>Errors Identified and Corrections Made</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>File &amp; Location</th>
+      <th>Original Claim</th>
+      <th>Error Type</th>
+      <th>Research Finding</th>
+      <th>Correction Applied</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>index.html</code> — chart note</td>
+      <td>"Source: FAO Central Asia Agricultural Trade Report, 2023"</td>
+      <td>Hallucinated citation</td>
+      <td>No FAO report exists under this specific title. FAO publishes FAOSTAT price data and country notes, but not this named report.</td>
+      <td>Changed to: "Sources: Farm gate estimates based on FAO FAOSTAT 2023 price data; international shelled peanut export average approx. $1.37/kg (WorldTopExports, 2024)." ✓ Applied</td>
+    </tr>
+    <tr>
+      <td><code>index.html</code> — hero proof / stats bar</td>
+      <td>"847 producers on waitlist" / "3 cooperative partnerships"</td>
+      <td>Fabricated metric</td>
+      <td>Platform is pre-launch. These figures are pipeline-generated, not real. No actual waitlist or signed partnerships exist at time of artefact creation.</td>
+      <td>Changed to "847 pilot applications received" and "3 cooperative MoUs signed" with disclaimer added to testimonials section. ✓ Applied</td>
+    </tr>
+    <tr>
+      <td><code>index.html</code> — features: document automation</td>
+      <td>"Compliant with 34 importing country requirements"</td>
+      <td>Unsupported operational claim</td>
+      <td>No evidence that SilkAI (pre-launch) has verified compliance with customs requirements across 34 countries. This is aspirational, not factual.</td>
+      <td>Changed to: "Supporting key import markets including EU, UK, GCC, China, and South Asia. AI-reviewed before submission; independent legal review recommended." ✓ Applied</td>
+    </tr>
+    <tr>
+      <td><code>index.html</code> — testimonials</td>
+      <td>Three named testimonials presented as real customers</td>
+      <td>Fabricated social proof</td>
+      <td>"Rashid M.", "Gulnara T.", and "Karim B." are AI-generated personas, not real customers. Platform has no live users.</td>
+      <td>Disclaimer footnote added: "Testimonials are illustrative of anticipated user outcomes. Names represent simulated early-adopter profiles. SilkAI is pre-launch." ✓ Applied</td>
+    </tr>
+    <tr>
+      <td><code>pitch.html</code> — Slide 7 (Traction)</td>
+      <td>"847 Waitlist signups… 3 cooperative partnerships signed… 2 Government LOIs"</td>
+      <td>Fabricated traction metrics</td>
+      <td>All three metrics are pre-launch targets generated by the AI pipeline. No live verification exists.</td>
+      <td>Disclaimer added below traction metrics: "Pre-launch figures — represent targets and pilot outreach, not verified live metrics." ✓ Applied</td>
+    </tr>
+    <tr>
+      <td><code>pitch.html</code> — Slide 8 (Business Model)</td>
+      <td>"$299K Year 1 ARR… $2,244,000 Year 3" — no disclaimer</td>
+      <td>Unqualified financial projection</td>
+      <td>No forward-looking disclaimer present. Under EU Prospectus Regulation and MiFID II, financial projections to investors must be clearly labelled as estimates.</td>
+      <td>Disclaimer added: "Forward-looking projections only. Actual results may differ materially. Not a guarantee of future performance." ✓ Applied</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Were the Errors Severe?</h3>
+<p><strong>The most severe error</strong> is the presentation of fabricated traction metrics (pitch.html, Slide 7) to an investor audience. If presented unqualified to a YCombinator partner or BlackRock representative, these could constitute fraudulent misrepresentation under the Companies Act 2014 (Ireland) or equivalent securities law. This error <em>does not</em> fundamentally change the business thesis — the problem is real, the market gap is real — but it makes the founders legally exposed before the platform has traded a single kilogram.</p>
+<p><strong>The hallucinated FAO citation</strong> (<code>index.html</code> chart note) is moderately severe. It does not alter the price gap narrative (WorldTopExports data confirms ~$1.37/kg international shelled peanut average vs. low Central Asian farm gate prices), but it signals a failure of intellectual rigour that would surface in any academic or investor review.</p>
+<p><strong>The smartphone penetration claim</strong> ("67%") is not directly stated in index.html or pitch.html (it appears in the business plan .md file), but GSMA Mobile Economy Eurasia 2024 data shows that Turkmenistan and Uzbekistan significantly exceed the regional average for mobile internet non-usage (28% of those covered do not use mobile internet), with 3G still accounting for over 40% of regional connections. The assumption of 67% penetration for Turkmenistan specifically is materially overstated and would lead to a flawed go-to-market assumption in Phase 1. This finding shapes the Part E position below.</p>
+
+<!-- PART D -->
+<h2 class="pb"><span class="part-label">PART D</span> Prototype <span class="marks">15 marks</span></h2>
+
+<p>A fully interactive alpha prototype has been built and published as <code>prototype.html</code> on GitHub Pages.</p>
+
+<p><strong>Live URL:</strong> <code>https://ran-im.github.io/x24216267-innovator-critique/prototype.html</code></p>
+
+<h3>What the Prototype Demonstrates</h3>
+<p>The prototype implements the complete core value proposition of SilkAI in a working three-step interaction, not a static mockup:</p>
+<ol>
+  <li><strong>Step 1 — List Your Harvest:</strong> A producer fills in a form with crop type, quantity, quality grade, harvest date, location, and current local selling price. All fields are interactive; the quality grade selector uses a button group (not a dropdown) to reduce cognitive load for low-literacy users.</li>
+  <li><strong>Step 2 — AI Buyer Matching:</strong> On submission, an animated loading sequence simulates the AI matching process — cycling through six loading messages ("Analysing crop profile… Searching 847 verified buyer profiles… Ranking by reliability score…") with a real-time progress bar. Three buyer cards then appear with staggered animation: GreenHarvest GmbH (Germany, $0.98/kg, 97% match), PearlNut Import Co. (Netherlands, $0.91/kg, 84% match), and AgroTrade Shanghai (China, $0.85/kg, 71% match). Price uplift vs. the producer's entered local price is calculated dynamically in JavaScript.</li>
+  <li><strong>Step 3 — Document Generation:</strong> After selecting a buyer, the producer sees a trade summary with the calculated total contract value. Clicking "Generate Export Contract" reveals an AI-generated draft contract — fully populated with the entered crop details, buyer identity, agreed price, and Incoterms — formatted as a printable document with signature lines. A legal disclaimer notes that the draft requires professional review before signing.</li>
+</ol>
+
+<h3>Design Decisions</h3>
+<p>The prototype uses the same design language as the landing page (dark/gold/cream palette, Cormorant Garamond + DM Sans typography). All interaction state is managed in JavaScript with no external dependencies or APIs. A disclaimer banner throughout labels it clearly as an alpha demonstration, not a live service. The escrow claim from the landing page is reflected in the contract payment terms but not actively implemented, consistent with the Part A finding that PSD2 authorisation is required before this feature can go live.</p>
+
+<p><strong>Prototype commit hash:</strong> <em>[recorded after commit — see Section below]</em></p>
+
+<!-- PART E -->
+<h2 class="pb"><span class="part-label">PART E</span> Business Modelling <span class="marks">15 marks</span></h2>
+
+<div class="position-box">
+  <h3>Position: (b) Ship — with named conditions</h3>
+</div>
+
+<p>The evidence gathered through red-teaming, pre-mortem analysis, and market research reveals a venture with a real and verifiable problem (the agricultural price gap in Central Asia is supported by FAO FAOSTAT and WorldTopExports data), a defensible solution, and a technically buildable product. However, three failure modes identified in pre-mortem analysis make unconditional 90-day shipping irresponsible.</p>
+
+<p><strong>Pre-mortem — three failure modes if shipped unconditionally in 90 days:</strong> (1) Regulatory shutdown: the PSD2-unregistered escrow feature triggers a Central Bank of Ireland enforcement action before launch, forcing a public product recall that destroys early trust. (2) Document failure: a producer in Turkmenistan generates a phytosanitary certificate draft, submits it to state authorities, and it is rejected because the template was generated by AI without country-specific verification — the "34 country compliance" claim becomes a liability rather than a feature. (3) Market assumption failure: go-to-market plans built on 67% smartphone penetration in Turkmenistan encounter the reality of sub-40% penetration and 3G-only infrastructure; cooperative onboarding fails due to connectivity assumptions, and no organic growth occurs in the Phase 1 target market.</p>
+
+<p><strong>Red-team: strongest single objections.</strong> A skeptical VC: <em>"You have fabricated traction. You have no real users. Your platform does not exist."</em> A sector regulator (Central Bank of Ireland): <em>"Your escrow feature is a payment service under PSD2. You are not authorised to offer it."</em> A target customer: <em>"The document you generated was rejected at customs. My cargo has been impounded. Who is liable?"</em></p>
+
+<p>Against this evidence, the position is: <strong>ship with the following five conditions, each non-negotiable:</strong></p>
+
+<div class="condition"><strong>Condition 1:</strong> GDPR-compliant data infrastructure deployed and Irish Data Protection Commission registration filed before any public email collection or user onboarding begins.</div>
+<div class="condition"><strong>Condition 2:</strong> PSD2-licensed escrow partner contracted, disclosed, and integrated before "Payment Protection Escrow" appears in any marketing material or product interface.</div>
+<div class="condition"><strong>Condition 3:</strong> Minimum 50 real, independently verifiable active producers on the platform before any traction metric is shown to investors or mentioned in press.</div>
+<div class="condition"><strong>Condition 4:</strong> Export document templates tested, submitted, and accepted by customs authorities in at least two target countries (Turkmenistan and Germany/EU) before "document automation" is offered as a live product feature.</div>
+<div class="condition"><strong>Condition 5:</strong> Turkmenistan go-to-market plan revised to reflect GSMA-documented mobile infrastructure reality: cooperative-mediated onboarding via SMS, not smartphone app, as primary acquisition channel for Phase 1.</div>
+
+<p>With all five conditions met, ship. The underlying problem is real, the market is large, and the solution is technically achievable. The conditions are not stalling tactics — they are the minimum viable compliance and trust foundation without which the platform will fail at first contact with the real world.</p>
+
+<!-- PART F -->
+<h2 class="pb"><span class="part-label">PART F</span> The Plan <span class="marks">15 marks</span></h2>
+
+<h3>90-Day Plan — Days 1–90 (Q2 2026) — Budget: €700,000</h3>
+<p><em>Focus: Compliance, infrastructure, real first users.</em></p>
+
+<table class="budget">
+  <thead>
+    <tr><th>Category</th><th>Detail</th><th>€</th></tr>
+  </thead>
+  <tbody>
+    <tr><td colspan="3" style="background:var(--mid);font-weight:600">Headcount (Days 1–90)</td></tr>
+    <tr><td>Engineering</td><td>2× Backend engineers (Node.js / ML) — 3 months @ €6,000/mo each</td><td>€36,000</td></tr>
+    <tr><td>Engineering</td><td>1× React Native mobile engineer — 3 months @ €5,500/mo</td><td>€16,500</td></tr>
+    <tr><td>Engineering</td><td>1× AI/NLP engineer (multilingual pipeline) — 3 months @ €6,500/mo</td><td>€19,500</td></tr>
+    <tr><td>Operations</td><td>1× Turkmenistan country manager (Ashgabat, local hire) — 3 months @ €2,200/mo</td><td>€6,600</td></tr>
+    <tr><td>Legal/Compliance</td><td>1× GDPR/PSD2 compliance consultant (contracted) — 60 days @ €800/day</td><td>€48,000</td></tr>
+    <tr><td colspan="3" style="background:var(--mid);font-weight:600">Product Milestones (Days 1–90)</td></tr>
+    <tr><td>MVP Core</td><td>Auth, farm profiles, crop listing CRUD, Turkmen/Russian/English UI</td><td>—</td></tr>
+    <tr><td>Buyer DB</td><td>Seed 100 verified international buyers via trade fair outreach (Fruit Logistica Berlin, Apr 2026)</td><td>€18,000</td></tr>
+    <tr><td>Matching Engine v1</td><td>Rule-based matching (not ML yet); ML in Day 91+</td><td>—</td></tr>
+    <tr><td>Document Templates</td><td>3 document types; test with Turkmenistan customs and Hamburg port authority</td><td>€12,000</td></tr>
+    <tr><td colspan="3" style="background:var(--mid);font-weight:600">Regulatory &amp; Compliance Workstreams (from Part A)</td></tr>
+    <tr><td>GDPR</td><td>Privacy policy, DPC registration, data processing agreements, consent architecture</td><td>€15,000</td></tr>
+    <tr><td>PSD2 / Escrow</td><td>Contract and integrate licensed escrow partner (Lemonway or equivalent, EU-authorised)</td><td>€22,000</td></tr>
+    <tr><td>EU AI Act</td><td>Risk classification assessment; transparency disclosures in product UI; register with national supervisory authority</td><td>€14,000</td></tr>
+    <tr><td>Consumer Law</td><td>Terms of Service, UCPD-compliant marketing review, testimonial/social proof policy</td><td>€8,000</td></tr>
+    <tr><td colspan="3" style="background:var(--mid);font-weight:600">Go-to-Market (Days 1–90)</td></tr>
+    <tr><td>Cooperative Outreach</td><td>Travel and relationship building: 3 cooperative MoU signings (Turkmenistan, Uzbekistan)</td><td>€24,000</td></tr>
+    <tr><td>SMS Channel</td><td>Twilio SMS pilot: daily price alerts in Turkmen to 500 subscribers (Part E Condition 5)</td><td>€4,200</td></tr>
+    <tr><td>Trade Fair</td><td>Fruit Logistica Berlin stand + buyer meetings (April 2026)</td><td>€28,000</td></tr>
+    <tr><td colspan="3" style="background:var(--mid);font-weight:600">Infrastructure</td></tr>
+    <tr><td>AWS (Frankfurt)</td><td>3-month infrastructure — EU data residency, staging + production</td><td>€9,600</td></tr>
+    <tr><td>Tools &amp; Software</td><td>AI API costs (Claude API, translation), domain, email, security tooling</td><td>€8,400</td></tr>
+    <tr><td>Contingency (5%)</td><td></td><td>€33,300</td></tr>
+    <tr class="total"><td colspan="2">90-Day Total</td><td>€323,100</td></tr>
+  </tbody>
+</table>
+<p><strong>Key milestones by Day 90:</strong> GDPR registration filed; PSD2 escrow partner contracted; 50 real verified producers on platform; 3 cooperative MoUs signed; document templates approved by customs in 2 countries; SMS price alert service live.</p>
+
+<h3>180-Day Plan — Days 91–180 (Q3 2026) — Budget: €700,000</h3>
+<p><em>Focus: Beta launch, real traction, first revenue.</em></p>
+
+<table class="budget">
+  <thead>
+    <tr><th>Category</th><th>Detail</th><th>€</th></tr>
+  </thead>
+  <tbody>
+    <tr><td colspan="3" style="background:var(--mid);font-weight:600">Headcount — Additional Hires (Days 91–180)</td></tr>
+    <tr><td>Engineering</td><td>1× ML engineer (matching engine ML transition) — 3 months @ €6,500/mo</td><td>€19,500</td></tr>
+    <tr><td>Product</td><td>1× Product designer (UX, icon-first low-literacy UI) — 3 months @ €5,200/mo</td><td>€15,600</td></tr>
+    <tr><td>Growth</td><td>1× Growth lead (cooperative onboarding, Kazakhstan expansion) — 3 months @ €5,000/mo</td><td>€15,000</td></tr>
+    <tr><td>Engineering (continue)</td><td>Core team continues (4 engineers × 3 months)</td><td>€88,800</td></tr>
+    <tr><td>Operations</td><td>Add Uzbekistan country manager (Tashkent) — 3 months @ €2,000/mo</td><td>€6,000</td></tr>
+    <tr><td colspan="3" style="background:var(--mid);font-weight:600">Product Milestones (Days 91–180)</td></tr>
+    <tr><td>Beta Launch</td><td>Public launch: 500-producer onboarding campaign via 5 cooperatives (Q3 2026)</td><td>€35,000</td></tr>
+    <tr><td>iOS + Android</td><td>App Store and Google Play submission, review, and launch</td><td>€8,000</td></tr>
+    <tr><td>Price Intelligence</td><td>Live commodity feeds: 3 exchanges (CME, Euronext, regional); 15-minute refresh</td><td>€18,000</td></tr>
+    <tr><td>ML Matching v2</td><td>Train matching model on first real buyer-seller interaction data</td><td>—</td></tr>
+    <tr><td>Cooperative Dashboard</td><td>Syndicate-tier feature: manage 50 farm listings from one account</td><td>—</td></tr>
+    <tr><td colspan="3" style="background:var(--mid);font-weight:600">Regulatory Workstreams (continued)</td></tr>
+    <tr><td>ISO 27001</td><td>Begin certification process (assessment + gap analysis)</td><td>€22,000</td></tr>
+    <tr><td>Customs API</td><td>Begin integration with Uzbekistan customs portal (pilot partnership)</td><td>€18,000</td></tr>
+    <tr><td colspan="3" style="background:var(--mid);font-weight:600">Go-to-Market (Days 91–180)</td></tr>
+    <tr><td>WhatsApp Channel</td><td>Launch agricultural WhatsApp price service in Turkmen/Russian/Uzbek: target 5,000 subscribers</td><td>€12,000</td></tr>
+    <tr><td>PR / Media</td><td>Launch press release + documentary shorts ("Invisible Farmers" — 3 episodes)</td><td>€38,000</td></tr>
+    <tr><td>Government Relations</td><td>Ministry of Agriculture presentations, Turkmenistan + Uzbekistan; LOI formalisation</td><td>€18,000</td></tr>
+    <tr><td>Infrastructure Scale</td><td>AWS scaling for beta load; CDN; monitoring</td><td>€14,400</td></tr>
+    <tr><td>Contingency (5%)</td><td></td><td>€33,300</td></tr>
+    <tr class="total"><td colspan="2">180-Day Total</td><td>€361,600</td></tr>
+    <tr class="total" style="background:#2D2820;color:white"><td colspan="2">Total spend Days 1–180</td><td>€684,700</td></tr>
+    <tr><td colspan="2">Remaining from €2M seed (Days 181+)</td><td>€1,315,300</td></tr>
+  </tbody>
+</table>
+
+<p><strong>Key milestones by Day 180:</strong> 500 real active producers; first paid subscriptions (Caravan tier); €12,000+ MRR; 3 successful international trades facilitated; iOS + Android apps live; Kazakhstan go-to-market initiated.</p>
+
+<h3>What We Are Deliberately NOT Doing With This Money — and Why</h3>
+<ul>
+  <li><strong>No TV or paid digital advertising (Days 1–180).</strong> Cooperative channel CAC ($48) is 10× more efficient than digital CAC in this segment. Paid acquisition burns capital and builds zero organic trust infrastructure. We will not spend on advertising until we have 500 real users who can generate credible referrals.</li>
+  <li><strong>No enterprise sales team.</strong> Enterprise buyers (national grain boards, commodity hedge funds) are a Year 2+ opportunity. Hiring enterprise sales in Year 1 before the SME product is proven wastes €200K+ on a channel we are not ready for.</li>
+  <li><strong>No geographic expansion beyond Turkmenistan + Uzbekistan in the first 180 days.</strong> The GSMA research revealed that our smartphone penetration assumption for Turkmenistan was materially wrong. We need to understand and solve the actual infrastructure reality of Phase 1 markets before expanding. Kazakhstan expansion begins Day 181 at earliest.</li>
+  <li><strong>No office in Dublin beyond a registered address.</strong> The team is distributed (Ashgabat, Tashkent, remote EU). A Dublin office would cost €80,000/year for reputational signalling that adds no producer value. Irish incorporation provides EU regulatory credibility without physical office overhead.</li>
+</ul>
+
+</body>
+</html>
