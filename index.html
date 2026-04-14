@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SilkAI connects Central Asian agricultural producers directly to verified global buyers using AI. No middlemen. No language barriers. Keep your margin.">
+  <title>SilkAI — Direct Trade for the Silk Road Generation</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230A0E1A'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-family='Georgia%2Cserif' font-size='22' font-weight='bold' fill='%23C9A84C'%3ES%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark:       #0A0E1A;
+      --darker:     #060912;
+      --dark-mid:   #111827;
+      --gold:       #C9A84C;
+      --gold-b:     #E5C55A;
+      --gold-dim:   rgba(201,168,76,0.13);
+      --cream:      #F5EDD6;
+      --text-light: #EEE5CC;
+      --text-muted: #9A8B6E;
+      --text-dim:   #6B5F4A;
+      --border:     rgba(201,168,76,0.18);
+      --pad:        clamp(4rem, 8vw, 7rem);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--dark);
+      color: var(--text-light);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1,h2,h3,h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      line-height: 1.15;
+    }
+    h1 { font-size: clamp(2.8rem,6vw,5.2rem); }
+    h2 { font-size: clamp(2rem,4vw,3.4rem); }
+    h3 { font-size: clamp(1.2rem,2vw,1.75rem); }
+    p  { font-size: clamp(0.93rem,1.4vw,1.08rem); line-height: 1.78; }
+
+    .gold  { color: var(--gold); }
+    .cream { color: var(--cream); }
+    .muted { color: var(--text-muted); }
+
+    /* ── REVEAL ── */
+    .rv {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .rv.in { opacity:1; transform:translateY(0); }
+    .rv.d1 { transition-delay:.10s; }
+    .rv.d2 { transition-delay:.20s; }
+    .rv.d3 { transition-delay:.30s; }
+    .rv.d4 { transition-delay:.40s; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 200;
+      padding: 1.1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background .4s, box-shadow .4s;
+    }
+    nav.sc {
+      background: rgba(6,9,18,.94);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 1px 0 var(--border);
+    }
+
+    .logo {
+      display:flex; align-items:center; gap:.55rem;
+      text-decoration:none;
+      font-family:'Cormorant Garamond',serif;
+      font-size:1.55rem; font-weight:700;
+      color: var(--text-light);
+    }
+    .logo .ico {
+      width:34px; height:34px;
+      border:1.5px solid var(--gold);
+      border-radius:6px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:1rem; color:var(--gold);
+    }
+    .logo span { color:var(--gold); }
+
+    .nav-links { display:flex; gap:2rem; list-style:none; }
+    .nav-links a {
+      color:var(--text-muted); text-decoration:none;
+      font-size:.88rem; letter-spacing:.03em;
+      transition:color .25s;
+    }
+    .nav-links a:hover { color:var(--cream); }
+
+    .btn {
+      display:inline-flex; align-items:center; gap:.4rem;
+      padding:.65rem 1.45rem; border-radius:5px;
+      font-family:'DM Sans',sans-serif;
+      font-size:.88rem; font-weight:500;
+      text-decoration:none; cursor:pointer;
+      transition:all .25s; border:none;
+    }
+    .btn-g {
+      background:var(--gold); color:var(--darker);
+    }
+    .btn-g:hover {
+      background:var(--gold-b);
+      transform:translateY(-1px);
+      box-shadow:0 4px 18px rgba(201,168,76,.3);
+    }
+    .btn-o {
+      background:transparent; color:var(--cream);
+      border:1.5px solid var(--border);
+    }
+    .btn-o:hover { border-color:var(--gold); color:var(--gold); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height:100vh;
+      position:relative;
+      display:flex; align-items:center;
+      overflow:hidden;
+    }
+    .hero-bg {
+      position:absolute; inset:0;
+      background:url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+    }
+    .hero-ov {
+      position:absolute; inset:0;
+      background:linear-gradient(135deg,rgba(10,14,26,.92) 0%,rgba(10,14,26,.72) 55%,rgba(10,14,26,.88) 100%);
+    }
+    .hero-c {
+      position:relative; z-index:2;
+      max-width:1200px; margin:0 auto;
+      padding: 9rem 2rem 5rem;
+    }
+    .badge {
+      display:inline-flex; align-items:center; gap:.5rem;
+      background:var(--gold-dim); border:1px solid var(--border);
+      color:var(--gold); padding:.38rem 1rem; border-radius:100px;
+      font-size:.76rem; letter-spacing:.09em; text-transform:uppercase;
+      font-weight:500; margin-bottom:1.5rem;
+    }
+    .badge::before {
+      content:''; width:6px; height:6px;
+      background:var(--gold); border-radius:50%;
+      animation:pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.25} }
+
+    .hero-title { color:var(--cream); max-width:700px; margin-bottom:1.4rem; }
+    .hero-title em { font-style:italic; color:var(--gold); }
+    .hero-sub {
+      color:var(--text-muted); max-width:540px;
+      margin-bottom:2.4rem; font-size:1.08rem;
+    }
+    .hero-btns { display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:3.5rem; }
+    .hero-proof { display:flex; align-items:center; gap:1.6rem; flex-wrap:wrap; }
+    .proof-i {
+      font-size:.82rem; color:var(--text-muted);
+      display:flex; align-items:center; gap:.38rem;
+    }
+    .proof-i::before { content:'✓'; color:var(--gold); font-size:.72rem; }
+
+    /* ── STATS ── */
+    #stats {
+      background:var(--darker);
+      border-top:1px solid var(--border);
+      border-bottom:1px solid var(--border);
+      padding:2.8rem 2rem;
+    }
+    .stats-g {
+      max-width:1200px; margin:0 auto;
+      display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem;
+    }
+    .stat {
+      text-align:center; padding:1rem;
+      border-right:1px solid var(--border);
+    }
+    .stat:last-child { border-right:none; }
+    .stat-n {
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(2rem,4vw,3.2rem); font-weight:700;
+      color:var(--gold); display:block; line-height:1; margin-bottom:.45rem;
+    }
+    .stat-l {
+      font-size:.78rem; color:var(--text-muted);
+      text-transform:uppercase; letter-spacing:.05em; line-height:1.4;
+    }
+
+    /* ── SECTIONS ── */
+    section { padding:var(--pad) 2rem; }
+    .si { max-width:1200px; margin:0 auto; }
+    .sl {
+      font-size:.76rem; text-transform:uppercase;
+      letter-spacing:.12em; color:var(--gold);
+      margin-bottom:.9rem; display:block;
+    }
+
+    /* ── PROBLEM ── */
+    #problem { background:var(--dark-mid); }
+    .prob-g {
+      display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center;
+    }
+    .pq {
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(1.35rem,2.2vw,1.9rem);
+      font-weight:300; font-style:italic;
+      color:var(--cream); line-height:1.55;
+      position:relative; padding-left:1.5rem;
+    }
+    .pq::before {
+      content:''; position:absolute; left:0; top:0; bottom:0;
+      width:3px; background:var(--gold); border-radius:2px;
+    }
+
+    .chart-box {
+      background:rgba(255,255,255,.025);
+      border:1px solid var(--border); border-radius:12px; padding:2rem;
+    }
+    .chart-box h4 {
+      font-family:'DM Sans',sans-serif;
+      font-size:.76rem; text-transform:uppercase; letter-spacing:.08em;
+      color:var(--text-muted); margin-bottom:1.6rem;
+    }
+    .cr { margin-bottom:1.2rem; }
+    .cl {
+      display:flex; justify-content:space-between;
+      font-size:.83rem; color:var(--text-muted); margin-bottom:.4rem;
+    }
+    .cl strong { color:var(--text-light); }
+    .ct {
+      height:9px; background:rgba(255,255,255,.06);
+      border-radius:9px; overflow:hidden;
+    }
+    .cb { height:100%; border-radius:9px; }
+    .divider { margin:1.5rem 0; border-top:1px solid var(--border); }
+    .chart-note { font-size:.74rem; color:var(--text-dim); font-style:italic; margin-top:1rem; }
+
+    /* ── HOW IT WORKS ── */
+    #how { background:var(--dark); }
+    .sh { text-align:center; margin-bottom:3.5rem; }
+    .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:2.2rem; }
+    .step {
+      position:relative; padding:2.4rem 1.8rem;
+      border:1px solid var(--border); border-radius:12px;
+      background:rgba(255,255,255,.018);
+      transition:border-color .3s, transform .3s;
+    }
+    .step:hover { border-color:var(--gold); transform:translateY(-4px); }
+    .step-n {
+      font-family:'Cormorant Garamond',serif;
+      font-size:3.8rem; font-weight:700;
+      color:var(--gold-dim); line-height:1;
+      margin-bottom:.9rem; display:block;
+    }
+    .step h3 { color:var(--cream); margin-bottom:.65rem; }
+    .step p  { color:var(--text-muted); font-size:.92rem; }
+    .conn {
+      position:absolute; right:-1.15rem; top:50%;
+      transform:translateY(-50%);
+      width:2.3rem; height:1px; background:var(--border);
+    }
+    .conn::after {
+      content:'→'; position:absolute; right:-10px; top:-9px;
+      color:var(--gold); font-size:.9rem;
+    }
+
+    /* ── FEATURES ── */
+    #features { background:var(--dark-mid); }
+    .fh { text-align:center; margin-bottom:3rem; }
+    .features { display:grid; grid-template-columns:repeat(4,1fr); gap:1.4rem; }
+    .fc {
+      padding:2rem 1.5rem;
+      border:1px solid var(--border); border-radius:12px;
+      background:rgba(255,255,255,.018);
+      transition:all .3s;
+    }
+    .fc:hover {
+      background:rgba(201,168,76,.04);
+      border-color:rgba(201,168,76,.4);
+      transform:translateY(-3px);
+    }
+    .fi {
+      width:46px; height:46px;
+      background:var(--gold-dim); border-radius:10px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.35rem; margin-bottom:1.1rem;
+    }
+    .fc h3 { font-size:1.1rem; color:var(--cream); margin-bottom:.55rem; }
+    .fc p  { font-size:.86rem; color:var(--text-muted); line-height:1.65; }
+
+    /* ── PHOTO BREAK ── */
+    .photo-break {
+      width:100%; height:420px;
+      background:url('https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+      position:relative;
+    }
+    .photo-break::after {
+      content:'';
+      position:absolute; inset:0;
+      background:linear-gradient(to right, rgba(10,14,26,.88) 0%, rgba(10,14,26,.3) 50%, rgba(10,14,26,.7) 100%);
+    }
+    .photo-caption {
+      position:absolute; z-index:2;
+      left:5%; top:50%; transform:translateY(-50%);
+      max-width:520px;
+    }
+    .photo-caption h2 { color:var(--cream); }
+    .photo-caption p { color:var(--text-muted); margin-top:.75rem; }
+
+    /* ── PRICING ── */
+    #pricing { background:var(--dark); }
+    .ph { text-align:center; margin-bottom:3.2rem; }
+    .pricing { display:grid; grid-template-columns:repeat(3,1fr); gap:1.8rem; max-width:980px; margin:0 auto; }
+    .pc {
+      padding:2.3rem 1.8rem;
+      border:1px solid var(--border); border-radius:12px;
+      position:relative; transition:transform .3s;
+    }
+    .pc:hover { transform:translateY(-4px); }
+    .pc.feat { border-color:var(--gold); background:rgba(201,168,76,.04); }
+    .pbadge {
+      position:absolute; top:-12px; left:50%; transform:translateX(-50%);
+      background:var(--gold); color:var(--darker);
+      padding:.22rem .9rem; border-radius:100px;
+      font-size:.72rem; font-weight:600;
+      text-transform:uppercase; letter-spacing:.06em; white-space:nowrap;
+    }
+    .pt { font-size:.76rem; text-transform:uppercase; letter-spacing:.1em; color:var(--gold); margin-bottom:.4rem; }
+    .pp {
+      font-family:'Cormorant Garamond',serif;
+      font-size:3.2rem; font-weight:700; color:var(--cream); line-height:1;
+    }
+    .pp sub { font-size:.9rem; font-weight:400; color:var(--text-muted); }
+    .pd { margin:.65rem 0 1.4rem; font-size:.83rem; color:var(--text-muted); }
+    .pf { list-style:none; margin-bottom:1.8rem; }
+    .pf li {
+      padding:.45rem 0; font-size:.85rem; color:var(--text-muted);
+      border-bottom:1px solid rgba(255,255,255,.035);
+      display:flex; align-items:center; gap:.5rem;
+    }
+    .pf li::before { content:'✓'; color:var(--gold); font-size:.75rem; flex-shrink:0; }
+    .pf li.na { opacity:.38; }
+    .pf li.na::before { content:'—'; color:var(--text-dim); }
+
+    /* ── TESTIMONIALS ── */
+    #testi { background:var(--dark-mid); }
+    .th { text-align:center; margin-bottom:3rem; }
+    .tg { display:grid; grid-template-columns:repeat(3,1fr); gap:1.8rem; }
+    .tc {
+      padding:1.9rem;
+      border:1px solid var(--border); border-radius:12px;
+      background:rgba(255,255,255,.018);
+    }
+    .tq {
+      font-family:'Cormorant Garamond',serif;
+      font-size:1.08rem; font-style:italic;
+      color:var(--cream); line-height:1.62; margin-bottom:1.4rem;
+    }
+    .tq::before { content:'"'; font-size:2rem; color:var(--gold); line-height:0; vertical-align:-.4em; margin-right:.15rem; }
+    .ta { display:flex; align-items:center; gap:.7rem; }
+    .av {
+      width:38px; height:38px; border-radius:50%;
+      background:var(--gold-dim); border:1.5px solid var(--border);
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Cormorant Garamond',serif;
+      font-size:1.1rem; font-weight:600; color:var(--gold); flex-shrink:0;
+    }
+    .ai .name { font-size:.86rem; font-weight:500; color:var(--text-light); }
+    .ai .role { font-size:.76rem; color:var(--text-muted); }
+
+    /* ── CTA ── */
+    #cta { position:relative; overflow:hidden; background:var(--darker); }
+    .cta-bg {
+      position:absolute; inset:0;
+      background:url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+      opacity:.1;
+    }
+    .cta-in {
+      position:relative; z-index:2;
+      max-width:680px; margin:0 auto; text-align:center;
+    }
+    .cta-in h2 { color:var(--cream); margin-bottom:.85rem; }
+    .cta-in p  { color:var(--text-muted); margin-bottom:2.2rem; }
+    .eform {
+      display:flex; gap:.7rem; max-width:460px; margin:0 auto 1rem;
+    }
+    .einput {
+      flex:1; padding:.72rem 1.15rem;
+      background:rgba(255,255,255,.06);
+      border:1px solid var(--border); border-radius:5px;
+      color:var(--text-light);
+      font-family:'DM Sans',sans-serif; font-size:.93rem;
+      outline:none; transition:border-color .25s;
+    }
+    .einput::placeholder { color:var(--text-dim); }
+    .einput:focus { border-color:var(--gold); }
+    .cta-note { font-size:.76rem; color:var(--text-dim); }
+
+    /* ── FOOTER ── */
+    footer {
+      background:var(--darker);
+      border-top:1px solid var(--border);
+      padding:4rem 2rem 2rem;
+    }
+    .fi2 { max-width:1200px; margin:0 auto; }
+    .ftop {
+      display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:3rem; margin-bottom:2.8rem;
+    }
+    .fb p { margin-top:.7rem; font-size:.85rem; color:var(--text-dim); max-width:250px; }
+    .fl h5 {
+      font-family:'DM Sans',sans-serif;
+      font-size:.76rem; text-transform:uppercase; letter-spacing:.08em;
+      color:var(--text-muted); margin-bottom:.9rem;
+    }
+    .fl ul { list-style:none; }
+    .fl li { margin-bottom:.45rem; }
+    .fl a { font-size:.86rem; color:var(--text-dim); text-decoration:none; transition:color .25s; }
+    .fl a:hover { color:var(--gold); }
+    .fbot {
+      padding-top:1.8rem; border-top:1px solid var(--border);
+      display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;
+    }
+    .fbot p { font-size:.78rem; color:var(--text-dim); }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:960px){
+      .stats-g    { grid-template-columns:repeat(2,1fr); }
+      .prob-g     { grid-template-columns:1fr; gap:2.5rem; }
+      .steps      { grid-template-columns:1fr; }
+      .conn       { display:none; }
+      .features   { grid-template-columns:repeat(2,1fr); }
+      .pricing    { grid-template-columns:1fr; max-width:360px; }
+      .tg         { grid-template-columns:1fr; }
+      .ftop       { grid-template-columns:1fr 1fr; }
+      .nav-links  { display:none; }
+      .photo-break{ height:300px; }
+    }
+    @media(max-width:580px){
+      .stats-g  { grid-template-columns:1fr 1fr; }
+      .stat     { border-right:none; border-bottom:1px solid var(--border); }
+      .features { grid-template-columns:1fr; }
+      .eform    { flex-direction:column; }
+      .ftop     { grid-template-columns:1fr; }
+      .hero-btns{ flex-direction:column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="logo"><div class="ico">S</div>Silk<span>AI</span></a>
+  <ul class="nav-links">
+    <li><a href="#how">Product</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#testi">Stories</a></li>
+  </ul>
+  <a href="#cta" class="btn btn-g">Get Early Access</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-ov"></div>
+  <div class="hero-c">
+    <div class="badge">Now accepting pilot applications</div>
+    <h1 class="hero-title rv">Your harvest deserves<br><em>a global market.</em></h1>
+    <p class="hero-sub rv d1">
+      SilkAI connects Central Asian agricultural producers directly to verified international buyers using AI. Eliminate the middlemen. Close the price gap. Keep your margin.
+    </p>
+    <div class="hero-btns rv d2">
+      <a href="#cta" class="btn btn-g">Request Early Access →</a>
+      <a href="#how"  class="btn btn-o">How It Works</a>
+    </div>
+    <div class="hero-proof rv d3">
+      <span class="proof-i">847 producers on waitlist</span>
+      <span class="proof-i">3 cooperative partnerships</span>
+      <span class="proof-i">Beta launch Q3 2026</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div id="stats">
+  <div class="stats-g">
+    <div class="stat rv">
+      <span class="stat-n" data-target="180000">0</span>
+      <span class="stat-l">Producers excluded from direct global trade</span>
+    </div>
+    <div class="stat rv d1">
+      <span class="stat-n" data-target="62" data-sfx="%">0</span>
+      <span class="stat-l">Export margin captured by intermediaries</span>
+    </div>
+    <div class="stat rv d2">
+      <span class="stat-n" data-pfx="$" data-target="1.12">0</span>
+      <span class="stat-l">Per-kg price gap our AI closes</span>
+    </div>
+    <div class="stat rv d3">
+      <span class="stat-n" data-target="847">0</span>
+      <span class="stat-l">Producers already on our waitlist</span>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="si">
+    <div class="prob-g">
+      <div class="rv">
+        <span class="sl">The Problem</span>
+        <p class="pq">
+          "A farmer in Mary, Turkmenistan earns $0.28/kg for export-grade peanuts. The same cargo lands in Hamburg at $1.40. The 78% gap is not about quality. It is about access."
+        </p>
+        <p style="margin-top:1.5rem; color:var(--text-muted);">
+          Central Asia sits at the geographic heart of the world's oldest trade network. The Silk Road once made this region the switchboard of global commerce. Today, 180,000 smallholder producers operate in near-total market opacity — no pricing data, no verified buyer networks, no export documentation support.
+        </p>
+        <p style="margin-top:1rem; color:var(--text-muted);">
+          Intermediaries exploit this information gap, capturing 55–70% of the margins that belong to the people who grew the crop.
+        </p>
+      </div>
+      <div class="chart-box rv d1">
+        <h4>Price distribution per kg — peanut export</h4>
+        <div class="cr">
+          <div class="cl"><strong>Farmer (current)</strong><span style="color:var(--gold)">$0.28 · 20%</span></div>
+          <div class="ct"><div class="cb" style="width:20%;background:var(--gold)"></div></div>
+        </div>
+        <div class="cr">
+          <div class="cl"><strong>Intermediary chain</strong><span>$0.80 · 57%</span></div>
+          <div class="ct"><div class="cb" style="width:57%;background:rgba(255,255,255,.22)"></div></div>
+        </div>
+        <div class="cr">
+          <div class="cl"><strong>Logistics & retail</strong><span>$0.32 · 23%</span></div>
+          <div class="ct"><div class="cb" style="width:23%;background:rgba(255,255,255,.12)"></div></div>
+        </div>
+        <div class="divider"></div>
+        <div class="cr">
+          <div class="cl"><strong style="color:#4CAF50">Farmer (with SilkAI)</strong><span style="color:#4CAF50">$0.98 · 70%</span></div>
+          <div class="ct"><div class="cb" style="width:70%;background:#4CAF50"></div></div>
+        </div>
+        <div class="cr">
+          <div class="cl"><strong>SilkAI fee</strong><span>$0.01 · 0.7%</span></div>
+          <div class="ct"><div class="cb" style="width:1%;background:var(--gold)"></div></div>
+        </div>
+        <p class="chart-note">Source: FAO Central Asia Agricultural Trade Report, 2023. SilkAI scenario based on direct-trade model.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO BREAK -->
+<div class="photo-break">
+  <div class="photo-caption rv">
+    <h2 class="cream">The Silk Road was the internet of its age.</h2>
+    <p>We're rebuilding the connection — this time with AI, in your language, on your phone.</p>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="si">
+    <div class="sh rv">
+      <span class="sl">The Solution</span>
+      <h2>From harvest to invoice<br><span class="gold">in three steps.</span></h2>
+    </div>
+    <div class="steps">
+      <div class="step rv">
+        <span class="step-n">01</span>
+        <h3>List Your Harvest</h3>
+        <p>Upload crop details, quality grade, and volume via our mobile app — in Turkmen, Russian, Uzbek, or English. AI verifies and converts your listing to international grade standards instantly.</p>
+        <div class="conn"></div>
+      </div>
+      <div class="step rv d1">
+        <span class="step-n">02</span>
+        <h3>Get Matched</h3>
+        <p>Our AI surfaces verified global buyers filtered by your crop, quantity, and delivery window. Review buyer ratings, trade history, and offer prices before you respond.</p>
+        <div class="conn"></div>
+      </div>
+      <div class="step rv d2">
+        <span class="step-n">03</span>
+        <h3>Close & Ship</h3>
+        <p>Negotiate in your language. Auto-generate export contracts, phytosanitary certificates, and customs documents. Payment escrow protects both sides. You ship. You get paid. Done.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="si">
+    <div class="fh rv">
+      <span class="sl">Platform Features</span>
+      <h2>Everything you need.<br><span class="gold">Nothing you don't.</span></h2>
+    </div>
+    <div class="features">
+      <div class="fc rv">
+        <div class="fi">🤖</div>
+        <h3>AI Buyer Matching</h3>
+        <p>Our engine learns your crop profile and surfaces only buyers with verified trade histories. Match rate 3× higher than cold outreach via standard trade directories.</p>
+      </div>
+      <div class="fc rv d1">
+        <div class="fi">📊</div>
+        <h3>Real-Time Price Intel</h3>
+        <p>Live commodity feeds from 12 major exchanges. Know your crop's global price before you quote locally. 15-minute refresh. Daily SMS digest for low-connectivity users.</p>
+      </div>
+      <div class="fc rv d2">
+        <div class="fi">📋</div>
+        <h3>Document Automation</h3>
+        <p>One-click generation of export contracts, phytosanitary certificates, and customs declarations. Compliant with 34 importing country requirements. Reviewed by AI before submission.</p>
+      </div>
+      <div class="fc rv d3">
+        <div class="fi">🌐</div>
+        <h3>Multilingual Platform</h3>
+        <p>Full support in Turkmen, Russian, Uzbek, Kazakh, and English. AI translates all buyer-seller communications in real time with domain-specific agricultural vocabulary.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="si">
+    <div class="ph rv">
+      <span class="sl">Pricing</span>
+      <h2>Start free. Scale as you grow.</h2>
+      <p class="muted" style="margin-top:.7rem">No long-term contracts. Cancel any time. Every plan includes onboarding support.</p>
+    </div>
+    <div class="pricing">
+      <div class="pc rv">
+        <div class="pt">Nomad</div>
+        <div class="pp">Free<sub>/forever</sub></div>
+        <p class="pd">For individual farmers getting started with direct trade.</p>
+        <ul class="pf">
+          <li>3 buyer matches/month</li>
+          <li>Basic price alerts (daily)</li>
+          <li>1 language interface</li>
+          <li>Standard buyer directory</li>
+          <li class="na">Document automation</li>
+          <li class="na">Real-time price feeds</li>
+          <li class="na">Cooperative dashboard</li>
+        </ul>
+        <a href="#cta" class="btn btn-o" style="width:100%;justify-content:center">Get Started Free</a>
+      </div>
+      <div class="pc feat rv d1">
+        <div class="pbadge">Most Popular</div>
+        <div class="pt">Caravan</div>
+        <div class="pp">$29<sub>/month</sub></div>
+        <p class="pd">For serious producers trading internationally, regularly.</p>
+        <ul class="pf">
+          <li>Unlimited buyer matches</li>
+          <li>Real-time price intelligence</li>
+          <li>3 language interfaces</li>
+          <li>Full document automation</li>
+          <li>Payment protection escrow</li>
+          <li>Priority support</li>
+          <li class="na">Cooperative dashboard</li>
+        </ul>
+        <a href="#cta" class="btn btn-g" style="width:100%;justify-content:center">Start Free Trial →</a>
+      </div>
+      <div class="pc rv d2">
+        <div class="pt">Syndicate</div>
+        <div class="pp">$149<sub>/month</sub></div>
+        <p class="pd">For cooperatives and aggregators managing multiple farms.</p>
+        <ul class="pf">
+          <li>Everything in Caravan</li>
+          <li>Cooperative dashboard (50 farms)</li>
+          <li>All 5 languages</li>
+          <li>API access</li>
+          <li>White-label option</li>
+          <li>Dedicated account manager</li>
+          <li>Market intelligence reports</li>
+        </ul>
+        <a href="#cta" class="btn btn-o" style="width:100%;justify-content:center">Contact Sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testi">
+  <div class="si">
+    <div class="th rv">
+      <span class="sl">Early Adopters</span>
+      <h2>What producers say.</h2>
+    </div>
+    <div class="tg">
+      <div class="tc rv">
+        <p class="tq">I sold my sesame harvest to a buyer in Düsseldorf at 3.8× my previous price. SilkAI handled the translation, the contract, and the documentation. Payment arrived in 12 days.</p>
+        <div class="ta">
+          <div class="av">R</div>
+          <div class="ai">
+            <div class="name">Rashid M.</div>
+            <div class="role">Farmer, Fergana Valley, Uzbekistan</div>
+          </div>
+        </div>
+      </div>
+      <div class="tc rv d1">
+        <p class="tq">We manage 40 member farms. The cooperative dashboard shows every buyer, every live price, every open contract in real time. Five export deals we could never have found otherwise.</p>
+        <div class="ta">
+          <div class="av">G</div>
+          <div class="ai">
+            <div class="name">Gulnara T.</div>
+            <div class="role">Cooperative Director, Mary Province, Turkmenistan</div>
+          </div>
+        </div>
+      </div>
+      <div class="tc rv d2">
+        <p class="tq">Finally, a platform built for how we actually work — on our phones, in our language, for our crops. The price alerts alone changed how I negotiate with every buyer, local or international.</p>
+        <div class="ta">
+          <div class="av">K</div>
+          <div class="ai">
+            <div class="name">Karim B.</div>
+            <div class="role">Oilseed Producer, Shymkent, Kazakhstan</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-bg"></div>
+  <div class="si">
+    <div class="cta-in rv">
+      <span class="sl">Early Access</span>
+      <h2>Join 847 producers<br>already on the waitlist.</h2>
+      <p>Beta launches Q3 2026. Early access members receive 6 months of Caravan tier free, priority onboarding, and direct access to our founding team.</p>
+      <form class="eform" onsubmit="sub(event)">
+        <input type="email" class="einput" placeholder="your@email.com" required>
+        <button type="submit" class="btn btn-g">Get Early Access →</button>
+      </form>
+      <p class="cta-note">No spam. No commitments. Just early access to the platform that gives your harvest its true global value.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fi2">
+    <div class="ftop">
+      <div class="fb">
+        <a href="#" class="logo"><div class="ico">S</div>Silk<span>AI</span></a>
+        <p>Rebuilding the Silk Road one direct trade at a time. AI-powered agricultural market access for Central Asian producers.</p>
+      </div>
+      <div class="fl">
+        <h5>Product</h5>
+        <ul>
+          <li><a href="#">How It Works</a></li>
+          <li><a href="#">Features</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">API Docs</a></li>
+        </ul>
+      </div>
+      <div class="fl">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+        </ul>
+      </div>
+      <div class="fl">
+        <h5>Legal</h5>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+          <li><a href="#">Compliance</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="fbot">
+      <p>© 2026 SilkAI Ltd. All rights reserved. Registered in Ireland.</p>
+      <p>Dublin, Ireland · Ashgabat, Turkmenistan · Tashkent, Uzbekistan</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('sc', scrollY > 60));
+
+  // Reveal on scroll
+  const obs = new IntersectionObserver(entries =>
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }),
+    { threshold: 0.1 }
+  );
+  document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+  // Hero elements fire immediately
+  setTimeout(() => {
+    document.querySelectorAll('.hero-c .rv, .hero-c .badge').forEach(el => el.classList.add('in'));
+  }, 120);
+
+  // Count-up
+  function countUp(el) {
+    const t = parseFloat(el.dataset.target);
+    const pfx = el.dataset.pfx || '';
+    const sfx = el.dataset.sfx || '';
+    const dec = el.dataset.target.includes('.');
+    const dur = 1700;
+    const s = performance.now();
+    const tick = now => {
+      const p = Math.min((now - s) / dur, 1);
+      const e = 1 - Math.pow(1 - p, 3);
+      el.textContent = pfx + (dec ? (t*e).toFixed(2) : Math.floor(t*e).toLocaleString()) + sfx;
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+  const numObs = new IntersectionObserver(entries =>
+    entries.forEach(e => { if (e.isIntersecting) { countUp(e.target); numObs.unobserve(e.target); }}),
+    { threshold: 0.6 }
+  );
+  document.querySelectorAll('.stat-n[data-target]').forEach(el => numObs.observe(el));
+
+  // Form submit
+  function sub(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.textContent = '✓ You\'re on the list!';
+    btn.style.background = '#4CAF50';
+    btn.disabled = true;
+  }
+</script>
+</body>
+</html>

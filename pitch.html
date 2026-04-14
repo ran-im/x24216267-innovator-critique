@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SilkAI — Investor Pitch Deck</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230A0E1A'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-family='Georgia%2Cserif' font-size='22' font-weight='bold' fill='%23C9A84C'%3ES%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark:   #0A0E1A;
+      --darker: #060912;
+      --gold:   #C9A84C;
+      --gold-b: #E5C55A;
+      --gold-d: rgba(201,168,76,0.14);
+      --cream:  #F5EDD6;
+      --muted:  #9A8B6E;
+      --dim:    #5A5040;
+      --border: rgba(201,168,76,0.18);
+      --green:  #4CAF50;
+    }
+
+    html, body { height: 100%; overflow: hidden; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--darker);
+      color: var(--cream);
+      user-select: none;
+    }
+
+    /* ── DECK CONTAINER ── */
+    #deck {
+      position: fixed; inset: 0;
+      overflow: hidden;
+    }
+
+    /* ── SLIDES ── */
+    .slide {
+      position: absolute; inset: 0;
+      display: flex;
+      overflow: hidden;
+      transition: transform .65s cubic-bezier(.65,0,.35,1), opacity .65s ease;
+    }
+    .slide.active  { transform: translateX(0);     opacity: 1;  z-index: 2; }
+    .slide.prev    { transform: translateX(-100%);  opacity: 0;  z-index: 1; }
+    .slide.next    { transform: translateX(100%);   opacity: 0;  z-index: 1; }
+    .slide.hidden  { transform: translateX(100%);   opacity: 0;  z-index: 0; }
+
+    /* ── REVEAL ITEMS ── */
+    .ri {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+    .ri.show { opacity: 1; transform: translateY(0); }
+
+    /* ── SLIDE PHOTO BG ── */
+    .sbg {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+    }
+    .sov {
+      position: absolute; inset: 0;
+    }
+
+    /* ── COMMON SLIDE LAYOUT ── */
+    .sc {
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      width: 100%; height: 100%;
+      padding: clamp(2.5rem, 5vw, 5rem) clamp(2rem, 6vw, 7rem);
+    }
+    .sc.center { align-items: center; text-align: center; }
+
+    h1, h2, h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: clamp(.65rem,.9vw,.78rem);
+      text-transform: uppercase; letter-spacing: .12em;
+      color: var(--gold); margin-bottom: 1rem;
+    }
+
+    .huge {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(5rem,16vw,13rem);
+      font-weight: 700;
+      color: var(--gold);
+      line-height: .9;
+    }
+
+    .xl {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem,8vw,7rem);
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .headline {
+      font-size: clamp(2rem,4.5vw,4rem);
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      color: var(--cream);
+      line-height: 1.15;
+    }
+
+    .subline {
+      font-size: clamp(.95rem,1.5vw,1.2rem);
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 640px;
+      margin-top: .75rem;
+    }
+
+    /* ── SLIDE 1: COVER ── */
+    #s1 .sbg { background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1920&q=80'); }
+    #s1 .sov { background: linear-gradient(135deg,rgba(6,9,18,.95) 0%,rgba(6,9,18,.75) 60%,rgba(10,14,26,.9) 100%); }
+    .logo-deck {
+      display: flex; align-items: center; gap: .6rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem,5vw,4rem);
+      font-weight: 700; color: var(--cream); margin-bottom: .5rem;
+    }
+    .logo-deck .ico {
+      width: clamp(44px,5vw,60px); height: clamp(44px,5vw,60px);
+      border: 2px solid var(--gold); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: clamp(1.4rem,2.5vw,2rem); color: var(--gold);
+    }
+    .logo-deck span { color: var(--gold); }
+    .cover-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem,3.5vw,3rem);
+      font-weight: 300; font-style: italic;
+      color: var(--cream); margin: .5rem 0 2rem; max-width: 720px;
+    }
+    .investor-bar {
+      display: flex; gap: clamp(1rem,3vw,3rem); flex-wrap: wrap;
+      align-items: center; margin-top: 2rem;
+    }
+    .inv-badge {
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--border);
+      padding: .45rem 1.1rem; border-radius: 4px;
+      font-size: clamp(.7rem,.9vw,.85rem);
+      color: var(--muted); letter-spacing: .05em;
+    }
+
+    /* ── SLIDE 2: PROBLEM ── */
+    #s2 .sbg { background-image: url('https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1920&q=80'); }
+    #s2 .sov { background: linear-gradient(to right, rgba(6,9,18,.97) 45%, rgba(6,9,18,.6) 100%); }
+
+    /* ── SLIDE 3: MARKET ── */
+    #s3 { background: var(--dark); }
+    .circles {
+      display: flex; align-items: center; gap: clamp(1.5rem,3vw,3rem);
+      flex-wrap: wrap; margin-top: 2rem;
+    }
+    .circle-item { text-align: center; }
+    .circle {
+      border-radius: 50%; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      margin: 0 auto 1rem;
+    }
+    .c1 { width:clamp(160px,22vw,230px); height:clamp(160px,22vw,230px); background:rgba(201,168,76,.12); border:2px solid var(--gold); }
+    .c2 { width:clamp(110px,15vw,160px); height:clamp(110px,15vw,160px); background:rgba(201,168,76,.08); border:1.5px solid rgba(201,168,76,.5); }
+    .c3 { width:clamp(75px,10vw,110px); height:clamp(75px,10vw,110px); background:rgba(201,168,76,.15); border:2px solid var(--gold); }
+    .c-num { font-family:'Cormorant Garamond',serif; font-weight:700; color:var(--gold); font-size:clamp(1.2rem,2.5vw,2.2rem); line-height:1; }
+    .c-label { font-size:clamp(.58rem,.75vw,.72rem); color:var(--muted); text-transform:uppercase; letter-spacing:.07em; margin-top:.3rem; }
+    .c-name { font-size:clamp(.7rem,.85vw,.82rem); color:var(--muted); text-transform:uppercase; letter-spacing:.08em; }
+
+    /* ── SLIDE 4: SOLUTION ── */
+    #s4 { background: var(--darker); }
+    .pills { display:flex; gap:1rem; flex-wrap:wrap; margin:1.5rem 0; }
+    .pill {
+      padding:.55rem 1.4rem; border-radius:100px;
+      border:1.5px solid var(--border);
+      font-size:clamp(.8rem,1.2vw,1rem); color:var(--cream);
+      background:var(--gold-d);
+    }
+
+    /* ── SLIDE 5: HOW IT WORKS ── */
+    #s5 { background: var(--dark); }
+    .steps5 { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(1rem,2vw,2.5rem); margin-top:2rem; }
+    .s5card {
+      padding:clamp(1.2rem,2vw,2rem); border:1px solid var(--border); border-radius:10px;
+      background:rgba(255,255,255,.02);
+    }
+    .s5num { font-family:'Cormorant Garamond',serif; font-size:clamp(2.5rem,5vw,4.5rem); font-weight:700; color:var(--gold-d); line-height:1; margin-bottom:.5rem; }
+    .s5card h3 { font-size:clamp(1rem,1.8vw,1.5rem); color:var(--cream); margin-bottom:.5rem; font-family:'Cormorant Garamond',serif; }
+    .s5card p  { font-size:clamp(.78rem,1vw,.92rem); color:var(--muted); line-height:1.65; }
+
+    /* ── SLIDE 6: PRODUCT ── */
+    #s6 { background: var(--darker); }
+    .mockup {
+      background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:12px;
+      padding:clamp(1rem,2vw,1.8rem); max-width:480px;
+    }
+    .mbar { display:flex; gap:.4rem; margin-bottom:1rem; }
+    .mdot { width:10px; height:10px; border-radius:50%; }
+    .mrow {
+      background:rgba(255,255,255,.06); border-radius:6px;
+      padding:.6rem .9rem; margin-bottom:.6rem;
+      font-size:clamp(.7rem,.9vw,.85rem);
+    }
+    .mrow .ml { font-size:.7rem; color:var(--muted); margin-bottom:.15rem; }
+    .mrow .mv { color:var(--cream); font-weight:500; }
+    .mhighlight { background:rgba(201,168,76,.1); border:1px solid var(--border); }
+    .mbtn {
+      margin-top:1rem; padding:.55rem 1.2rem;
+      background:var(--gold); color:var(--darker);
+      border-radius:5px; font-size:.82rem; font-weight:600;
+      display:inline-block; text-align:center;
+    }
+
+    /* ── SLIDE 7: TRACTION ── */
+    #s7 { background: var(--dark); }
+    .tmetrics { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(1.5rem,3vw,3rem); margin-top:2rem; }
+    .tmet { text-align:center; padding:clamp(1.5rem,2.5vw,2.5rem); border:1px solid var(--border); border-radius:10px; background:rgba(255,255,255,.02); }
+    .tnum { font-family:'Cormorant Garamond',serif; font-size:clamp(3rem,7vw,6rem); font-weight:700; color:var(--gold); line-height:1; display:block; }
+    .tlab { font-size:clamp(.72rem,.95vw,.88rem); color:var(--muted); margin-top:.5rem; line-height:1.4; }
+    .tbar-track { height:6px; background:rgba(255,255,255,.08); border-radius:6px; margin-top:1rem; overflow:hidden; }
+    .tbar { height:100%; border-radius:6px; background:var(--gold); }
+
+    /* ── SLIDE 8: BIZ MODEL ── */
+    #s8 { background: var(--darker); }
+    .brows { display:flex; flex-direction:column; gap:.9rem; margin-top:1.5rem; max-width:600px; }
+    .brow { display:flex; align-items:center; gap:1.2rem; }
+    .brow-label { width:clamp(120px,18vw,200px); font-size:clamp(.75rem,1vw,.9rem); color:var(--cream); flex-shrink:0; }
+    .brow-track { flex:1; height:12px; background:rgba(255,255,255,.07); border-radius:6px; overflow:hidden; }
+    .brow-bar { height:100%; border-radius:6px; }
+    .brow-val { width:50px; text-align:right; font-size:clamp(.75rem,1vw,.88rem); color:var(--gold); flex-shrink:0; }
+
+    /* ── SLIDE 9: GTM ── */
+    #s9 { background: var(--dark); }
+    .phases { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(1rem,2vw,2rem); margin-top:2rem; }
+    .phase {
+      padding:clamp(1.2rem,2vw,2rem); border:1px solid var(--border); border-radius:10px;
+      background:rgba(255,255,255,.02); position:relative;
+    }
+    .phase.active-phase { border-color:var(--gold); background:rgba(201,168,76,.05); }
+    .ph-tag { font-size:.7rem; text-transform:uppercase; letter-spacing:.1em; color:var(--gold); margin-bottom:.5rem; }
+    .ph-title { font-family:'Cormorant Garamond',serif; font-size:clamp(1.1rem,1.8vw,1.6rem); color:var(--cream); margin-bottom:.5rem; }
+    .ph-desc  { font-size:clamp(.72rem,.95vw,.88rem); color:var(--muted); line-height:1.55; }
+    .ph-badge {
+      position:absolute; top:-10px; right:1rem;
+      background:var(--gold); color:var(--darker);
+      font-size:.65rem; font-weight:700; padding:.2rem .7rem; border-radius:100px;
+      text-transform:uppercase; letter-spacing:.06em;
+    }
+
+    /* ── SLIDE 10: ASK ── */
+    #s10 { background: var(--darker); }
+    .alloc { display:grid; grid-template-columns:repeat(2,1fr); gap:1rem; margin-top:2rem; max-width:520px; }
+    .alitem {
+      padding:1rem 1.2rem; border:1px solid var(--border); border-radius:8px;
+      background:rgba(255,255,255,.02);
+    }
+    .al-pct { font-family:'Cormorant Garamond',serif; font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:700; color:var(--gold); line-height:1; }
+    .al-label { font-size:clamp(.7rem,.9vw,.82rem); color:var(--muted); margin-top:.25rem; }
+
+    /* ── SLIDE 11: LESSONS LEARNED ── */
+    #s11 { background: var(--cream); }
+    #s11 .sc { color: var(--darker); }
+    .ll-list { list-style:none; margin-top:1.5rem; max-width:780px; }
+    .ll-list li {
+      display:flex; align-items:flex-start; gap:.9rem;
+      padding:.7rem 0; border-bottom:1px solid rgba(10,14,26,.1);
+      font-size:clamp(.88rem,1.3vw,1.08rem); color:#2A2016; line-height:1.65;
+    }
+    .ll-list li:last-child { border-bottom:none; }
+    .ll-list li::before {
+      content:'→'; color:var(--gold); font-size:1.1rem; flex-shrink:0; margin-top:.05rem;
+    }
+    .ll-headline {
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(2rem,4vw,3.5rem); font-weight:700; color:var(--dark);
+    }
+    .ll-sub { font-size:clamp(.82rem,1.1vw,.95rem); color:#6B5F4A; margin-top:.4rem; }
+
+    /* ── NAVIGATION UI ── */
+    #ui {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 100;
+    }
+
+    /* Click zones */
+    .zone {
+      position: absolute; top:0; bottom:0; width:20%;
+      pointer-events: all; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity .25s;
+    }
+    .zone:hover { opacity: 1; }
+    #zone-prev { left:0; background:linear-gradient(to right,rgba(6,9,18,.3),transparent); }
+    #zone-next { right:0; background:linear-gradient(to left,rgba(6,9,18,.3),transparent); }
+    .zone-arrow {
+      font-size:2rem; color:rgba(201,168,76,.7);
+    }
+
+    /* Slide counter */
+    #counter {
+      position: absolute; top:1.5rem; right:2rem;
+      font-size:.8rem; color:var(--muted);
+      letter-spacing:.08em; pointer-events:none;
+      font-family:'DM Sans',sans-serif;
+      background:rgba(6,9,18,.5); backdrop-filter:blur(8px);
+      padding:.3rem .7rem; border-radius:4px;
+      border:1px solid var(--border);
+    }
+    #counter span { color:var(--gold); }
+
+    /* Dots */
+    #dots {
+      position: absolute; bottom:1.8rem; left:50%; transform:translateX(-50%);
+      display: flex; gap:.6rem; pointer-events:all;
+    }
+    .dot {
+      width:7px; height:7px; border-radius:50%;
+      background:rgba(201,168,76,.3); cursor:pointer;
+      transition:all .3s; border:1px solid rgba(201,168,76,.4);
+    }
+    .dot.on { background:var(--gold); width:22px; border-radius:4px; }
+
+    /* Brand watermark top-left */
+    #brand-wm {
+      position: absolute; top:1.4rem; left:2rem;
+      font-family:'Cormorant Garamond',serif;
+      font-size:1.2rem; font-weight:700;
+      color:rgba(245,237,214,.5); pointer-events:none;
+      letter-spacing:.02em;
+    }
+    #brand-wm span { color:rgba(201,168,76,.5); }
+    #s11 ~ * #brand-wm { color:rgba(10,14,26,.3); }
+  </style>
+</head>
+<body>
+
+<div id="deck">
+
+  <!-- SLIDE 1: COVER -->
+  <div class="slide active" id="s1">
+    <div class="sbg"></div>
+    <div class="sov"></div>
+    <div class="sc">
+      <div class="logo-deck ri"><div class="ico">S</div>Silk<span>AI</span></div>
+      <p class="cover-tagline ri" style="transition-delay:.15s">
+        180,000 farmers.<br>One broken market.<br>One fix.
+      </p>
+      <p style="color:var(--muted);font-size:clamp(.8rem,1.1vw,.95rem);margin-bottom:1.8rem" class="ri" style="transition-delay:.25s">
+        Seed Round · April 2026
+      </p>
+      <div class="investor-bar ri" style="transition-delay:.35s">
+        <div class="inv-badge">YCombinator</div>
+        <div class="inv-badge">TechStars</div>
+        <div class="inv-badge">Dogpatch Labs</div>
+        <div class="inv-badge">BlackRock Capital</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: PROBLEM -->
+  <div class="slide next" id="s2">
+    <div class="sbg"></div>
+    <div class="sov"></div>
+    <div class="sc">
+      <span class="tag ri">The Invisible Tax</span>
+      <div class="huge ri" style="transition-delay:.12s">62%</div>
+      <p class="ri" style="font-size:clamp(1rem,2vw,1.4rem);color:var(--cream);max-width:620px;margin-top:.8rem;line-height:1.55;transition-delay:.22s">
+        Of every dollar earned from Central Asian agricultural exports never reaches the farmer.
+      </p>
+      <div style="margin-top:2rem;display:flex;gap:2.5rem;flex-wrap:wrap" class="ri" style="transition-delay:.32s">
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,3rem);font-weight:700;color:var(--gold)">$0.28</div>
+          <div style="font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-top:.25rem">Farmer receives / kg</div>
+        </div>
+        <div style="display:flex;align-items:center;font-size:1.8rem;color:var(--muted)">→</div>
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,3rem);font-weight:700;color:var(--cream)">$1.40</div>
+          <div style="font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-top:.25rem">Hamburg spot price / kg</div>
+        </div>
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,3rem);font-weight:700;color:#e05555">78%</div>
+          <div style="font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-top:.25rem">Lost to intermediaries</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: MARKET -->
+  <div class="slide next" id="s3">
+    <div class="sc center">
+      <span class="tag ri">The Opportunity</span>
+      <div class="headline ri" style="transition-delay:.12s">A $4.2 billion market with<br><span style="color:var(--gold)">zero direct-trade platforms.</span></div>
+      <div class="circles ri" style="transition-delay:.25s;justify-content:center">
+        <div class="circle-item">
+          <div class="circle c1">
+            <div class="c-num">$4.2B</div>
+            <div class="c-label">TAM</div>
+          </div>
+          <div class="c-name">Total Market</div>
+        </div>
+        <div class="circle-item">
+          <div class="circle c2">
+            <div class="c-num">$280M</div>
+            <div class="c-label">SAM</div>
+          </div>
+          <div class="c-name">Serviceable</div>
+        </div>
+        <div class="circle-item">
+          <div class="circle c3">
+            <div class="c-num">$12M</div>
+            <div class="c-label">SOM Y3</div>
+          </div>
+          <div class="c-name">Our Target</div>
+        </div>
+      </div>
+      <p class="ri" style="transition-delay:.38s;color:var(--muted);font-size:clamp(.78rem,1.1vw,.92rem);margin-top:1.5rem">
+        Central Asian agricultural exports grew 18% YoY (2021–2024). Smartphone penetration: 67%. EU preferential access expanded 2025.
+      </p>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: SOLUTION -->
+  <div class="slide next" id="s4">
+    <div class="sc">
+      <span class="tag ri">Our Solution</span>
+      <div class="headline ri" style="transition-delay:.12s;max-width:700px">
+        SilkAI: AI-powered trade infrastructure<br><span style="color:var(--gold)">for the Silk Road generation.</span>
+      </div>
+      <p class="subline ri" style="transition-delay:.22s">
+        A mobile-first B2B platform that connects Central Asian smallholder producers directly to verified international buyers — eliminating intermediaries, closing the price gap, and automating the compliance burden that makes direct trade inaccessible today.
+      </p>
+      <div class="pills ri" style="transition-delay:.32s">
+        <div class="pill">🤖 AI Buyer Matching</div>
+        <div class="pill">📊 Real-Time Price Intel</div>
+        <div class="pill">📋 Document Automation</div>
+        <div class="pill">🌐 5 Languages</div>
+        <div class="pill">🔒 Escrow Protection</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: HOW IT WORKS -->
+  <div class="slide next" id="s5">
+    <div class="sc">
+      <span class="tag ri">How It Works</span>
+      <div class="headline ri" style="transition-delay:.1s">Three steps.<br><span style="color:var(--gold)">From harvest to invoice.</span></div>
+      <div class="steps5">
+        <div class="s5card ri" style="transition-delay:.2s">
+          <div class="s5num">01</div>
+          <h3>List Your Harvest</h3>
+          <p>Upload crop, grade, and volume via mobile app in Turkmen, Russian, Uzbek, or English. AI converts to international grade standards instantly.</p>
+        </div>
+        <div class="s5card ri" style="transition-delay:.3s">
+          <div class="s5num">02</div>
+          <h3>Get Matched</h3>
+          <p>AI surfaces verified global buyers filtered by crop, quantity, and delivery window. View trade history and ratings before responding.</p>
+        </div>
+        <div class="s5card ri" style="transition-delay:.4s">
+          <div class="s5num">03</div>
+          <h3>Close &amp; Ship</h3>
+          <p>Negotiate in your language. Auto-generate all export documents. Escrow protects payment. You ship. You get paid.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: PRODUCT -->
+  <div class="slide next" id="s6">
+    <div class="sc" style="flex-direction:row;align-items:center;gap:clamp(2rem,5vw,6rem)">
+      <div style="flex:1">
+        <span class="tag ri">The Product</span>
+        <div class="headline ri" style="transition-delay:.1s">
+          Match. Negotiate.<br><span style="color:var(--gold)">Ship. In your language.</span>
+        </div>
+        <p class="subline ri" style="transition-delay:.2s">
+          Icon-first interface. Voice input. Offline-first. Core flow completes in under 3 minutes on a 3G connection.
+        </p>
+        <div style="margin-top:1.5rem;display:flex;flex-direction:column;gap:.6rem" class="ri" style="transition-delay:.3s">
+          <div style="display:flex;align-items:center;gap:.6rem;font-size:clamp(.78rem,1vw,.9rem);color:var(--muted)"><span style="color:var(--gold)">✓</span> Works offline — syncs when connected</div>
+          <div style="display:flex;align-items:center;gap:.6rem;font-size:clamp(.78rem,1vw,.9rem);color:var(--muted)"><span style="color:var(--gold)">✓</span> SMS fallback for no-data environments</div>
+          <div style="display:flex;align-items:center;gap:.6rem;font-size:clamp(.78rem,1vw,.9rem);color:var(--muted)"><span style="color:var(--gold)">✓</span> iOS + Android + Progressive Web App</div>
+        </div>
+      </div>
+      <div class="mockup ri" style="transition-delay:.2s;flex-shrink:0">
+        <div class="mbar">
+          <div class="mdot" style="background:#ff5f57"></div>
+          <div class="mdot" style="background:#ffbd2e"></div>
+          <div class="mdot" style="background:#28ca41"></div>
+        </div>
+        <div style="font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.8rem">Active Match · Buyer Offer</div>
+        <div class="mrow mhighlight">
+          <div class="ml">Buyer</div>
+          <div class="mv">GreenHarvest GmbH, Germany ✓ Verified</div>
+        </div>
+        <div class="mrow">
+          <div class="ml">Offer Price</div>
+          <div class="mv" style="color:#4CAF50">$0.98/kg (+250% vs local)</div>
+        </div>
+        <div class="mrow">
+          <div class="ml">Volume Required</div>
+          <div class="mv">8,000 kg · Grade A peanuts</div>
+        </div>
+        <div class="mrow">
+          <div class="ml">Payment Terms</div>
+          <div class="mv">Escrow · Release on delivery</div>
+        </div>
+        <div class="mrow">
+          <div class="ml">Delivery Window</div>
+          <div class="mv">15 Jun – 30 Jun 2026</div>
+        </div>
+        <div class="mbtn">Respond in Turkmen →</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: TRACTION -->
+  <div class="slide next" id="s7">
+    <div class="sc center">
+      <span class="tag ri">Traction</span>
+      <div class="headline ri" style="transition-delay:.1s">Early signals are <span style="color:var(--gold)">strong.</span></div>
+      <div class="tmetrics ri" style="transition-delay:.22s">
+        <div class="tmet">
+          <span class="tnum">847</span>
+          <div class="tlab">Waitlist signups<br>across 4 countries</div>
+          <div class="tbar-track"><div class="tbar" style="width:85%"></div></div>
+        </div>
+        <div class="tmet">
+          <span class="tnum">3</span>
+          <div class="tlab">Agricultural cooperative<br>partnerships signed</div>
+          <div class="tbar-track"><div class="tbar" style="width:30%"></div></div>
+        </div>
+        <div class="tmet">
+          <span class="tnum">2</span>
+          <div class="tlab">Government Letters<br>of Intent (TKM + UZB)</div>
+          <div class="tbar-track"><div class="tbar" style="width:20%"></div></div>
+        </div>
+      </div>
+      <p class="ri" style="transition-delay:.35s;color:var(--muted);font-size:clamp(.75rem,1vw,.9rem);margin-top:1.5rem">
+        Zero paid acquisition. 100% organic via cooperative networks and Ministry of Agriculture introductions.
+      </p>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: BUSINESS MODEL -->
+  <div class="slide next" id="s8">
+    <div class="sc">
+      <span class="tag ri">Business Model</span>
+      <div class="headline ri" style="transition-delay:.1s">Three revenue streams.<br><span style="color:var(--gold)">All aligned with producer success.</span></div>
+      <div class="brows ri" style="transition-delay:.22s">
+        <div class="brow">
+          <div class="brow-label">SaaS Subscriptions</div>
+          <div class="brow-track"><div class="brow-bar" style="width:60%;background:var(--gold)"></div></div>
+          <div class="brow-val">60%</div>
+        </div>
+        <div class="brow">
+          <div class="brow-label">Transaction Fees (0.5%)</div>
+          <div class="brow-track"><div class="brow-bar" style="width:25%;background:#4CAF50"></div></div>
+          <div class="brow-val">25%</div>
+        </div>
+        <div class="brow">
+          <div class="brow-label">Data Intelligence</div>
+          <div class="brow-track"><div class="brow-bar" style="width:15%;background:rgba(201,168,76,.5)"></div></div>
+          <div class="brow-val">15%</div>
+        </div>
+      </div>
+      <div style="margin-top:2rem;display:flex;gap:clamp(1.5rem,3vw,3rem);flex-wrap:wrap" class="ri" style="transition-delay:.32s">
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,3vw,2.6rem);font-weight:700;color:var(--gold)">$299K</div>
+          <div style="font-size:.76rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">Year 1 ARR Target</div>
+        </div>
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,3vw,2.6rem);font-weight:700;color:var(--cream)">$2.1M</div>
+          <div style="font-size:.76rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">Year 3 ARR Projection</div>
+        </div>
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,3vw,2.6rem);font-weight:700;color:var(--cream)">$29–$149</div>
+          <div style="font-size:.76rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">Monthly ARPU Range</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: GO-TO-MARKET -->
+  <div class="slide next" id="s9">
+    <div class="sc">
+      <span class="tag ri">Go-to-Market</span>
+      <div class="headline ri" style="transition-delay:.1s">Country by country.<br><span style="color:var(--gold)">Cooperative by cooperative.</span></div>
+      <div class="phases ri" style="transition-delay:.22s">
+        <div class="phase active-phase">
+          <div class="ph-badge">Active Now</div>
+          <div class="ph-tag">Phase 1 · 2026</div>
+          <div class="ph-title">Turkmenistan + Uzbekistan</div>
+          <p class="ph-desc">Seed 1,000 active producers via 5 cooperative partnerships. Government-backed onboarding programs. Pilot with Ministry of Agriculture, Turkmenistan.</p>
+        </div>
+        <div class="phase">
+          <div class="ph-tag">Phase 2 · 2027</div>
+          <div class="ph-title">Kazakhstan + Kyrgyzstan</div>
+          <p class="ph-desc">Scale via agricultural export associations. Target 10,000 active producers. Launch commodity intelligence reports for enterprise buyers.</p>
+        </div>
+        <div class="phase">
+          <div class="ph-tag">Phase 3 · 2028</div>
+          <div class="ph-title">Mongolia + Azerbaijan</div>
+          <p class="ph-desc">Full Central Asian corridor coverage. Enterprise buyer subscriptions. API licensing to national agricultural data platforms.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: THE ASK -->
+  <div class="slide next" id="s10">
+    <div class="sc">
+      <span class="tag ri">The Ask</span>
+      <div class="xl ri" style="transition-delay:.1s">$2,000,000</div>
+      <p class="ri" style="transition-delay:.18s;font-size:clamp(.85rem,1.2vw,1rem);color:var(--muted);margin:.5rem 0 1.5rem">Seed Round · 18-month runway · Target: 1,000 active producers · $500K ARR</p>
+      <div class="alloc ri" style="transition-delay:.28s">
+        <div class="alitem">
+          <div class="al-pct">40%</div>
+          <div class="al-label">Product &amp; Engineering<br>($800K)</div>
+        </div>
+        <div class="alitem">
+          <div class="al-pct">25%</div>
+          <div class="al-label">Market Expansion<br>($500K)</div>
+        </div>
+        <div class="alitem">
+          <div class="al-pct">20%</div>
+          <div class="al-label">Operations &amp; Compliance<br>($400K)</div>
+        </div>
+        <div class="alitem">
+          <div class="al-pct">15%</div>
+          <div class="al-label">Marketing &amp; Growth<br>($300K)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11: LESSONS LEARNED -->
+  <div class="slide next" id="s11">
+    <div class="sc">
+      <span class="tag ri" style="color:var(--gold)">Lessons Learned</span>
+      <div class="ll-headline ri" style="transition-delay:.1s">From five random words<br>to a live startup.</div>
+      <p class="ll-sub ri" style="transition-delay:.18s">Reflections on the AI Innovator pipeline — what worked, what broke, what surprised.</p>
+      <ul class="ll-list ri" style="transition-delay:.28s">
+        <li>The constraint of random parameters is a feature, not a bug — forcing unexpected combinations produces more original concepts than open briefs.</li>
+        <li>AI accelerates ideation but cannot replace specificity: the most credible parts of this venture came from real data (FAO reports, price gap research) inserted by the human, not generated by the model.</li>
+        <li>Agentic pipelines expose the compounding value of context — each step produced better output because it built on a richer brief than the previous step started with.</li>
+        <li>The "world-class" standard demands visual and copy discipline simultaneously; it is easier to produce either excellent design or excellent copy — delivering both in one pass requires deliberate constraint.</li>
+        <li>Regulatory and ethical issues are almost always present in AI-generated artefacts, but they are only visible if you specifically go looking for them — a passive review will miss them.</li>
+        <li>The real test of an innovation pipeline is whether you can defend your position when challenged — the output is a starting point, not a conclusion.</li>
+        <li>The kangaroo in Mary, Turkmenistan remains the single most memorable detail — irrelevance, handled correctly, becomes originality.</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+<!-- NAVIGATION UI -->
+<div id="ui">
+  <div id="brand-wm">Silk<span>AI</span></div>
+  <div id="counter"><span id="cur">1</span> / <span id="tot">11</span></div>
+  <div id="zone-prev" class="zone" onclick="go(-1)"><div class="zone-arrow">‹</div></div>
+  <div id="zone-next" class="zone" onclick="go(1)"><div class="zone-arrow">›</div></div>
+  <div id="dots"></div>
+</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total  = slides.length;
+  let cur = 0;
+
+  // Build dots
+  const dotsEl = document.getElementById('dots');
+  slides.forEach((_,i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i===0 ? ' on' : '');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  });
+
+  function revealSlide(idx) {
+    const items = slides[idx].querySelectorAll('.ri');
+    items.forEach((el, i) => {
+      // respect existing transition-delay if set inline; otherwise stagger
+      const existing = el.style.transitionDelay;
+      if (!existing) el.style.transitionDelay = (i * 0.12) + 's';
+      setTimeout(() => el.classList.add('show'), 60);
+    });
+  }
+
+  function hideSlide(idx) {
+    slides[idx].querySelectorAll('.ri').forEach(el => {
+      el.classList.remove('show');
+      el.style.transitionDelay = '';
+    });
+  }
+
+  function goTo(n) {
+    if (n === cur) return;
+    const dir = n > cur ? 1 : -1;
+
+    hideSlide(cur);
+    slides[cur].className = 'slide ' + (dir > 0 ? 'prev' : 'next');
+    cur = n;
+    slides[cur].className = 'slide active';
+    revealSlide(cur);
+
+    // Update counter & dots
+    document.getElementById('cur').textContent = cur + 1;
+    document.querySelectorAll('.dot').forEach((d,i) => d.classList.toggle('on', i===cur));
+  }
+
+  function go(d) { goTo(Math.max(0, Math.min(total-1, cur + d))); }
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ')  { e.preventDefault(); go(1); }
+    if (e.key === 'ArrowLeft')                     { e.preventDefault(); go(-1); }
+  });
+
+  // Touch swipe
+  let tx = 0;
+  document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, {passive:true});
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
+  });
+
+  // Init first slide
+  document.getElementById('tot').textContent = total;
+  revealSlide(0);
+</script>
+</body>
+</html>
